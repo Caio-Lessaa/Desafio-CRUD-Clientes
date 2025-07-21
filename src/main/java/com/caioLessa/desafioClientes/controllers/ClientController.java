@@ -32,4 +32,10 @@ public class ClientController {
         Page<ClientDTO> clientDTOS = clientService.findAll(pageable);
         return ResponseEntity.ok(clientDTOS);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ClientDTO> findById(@PathVariable Long id) {
+        ClientDTO clientDTO = clientService.findById(id);
+        return ResponseEntity.ok(clientDTO);
+    }
 }

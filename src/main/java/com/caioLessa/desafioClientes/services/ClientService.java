@@ -29,6 +29,11 @@ public class ClientService {
         return result.map(x -> new ClientDTO(x));
     }
 
+    public ClientDTO findById(Long id) {
+        Client client = clientRepository.findById(id).orElseThrow(() -> new RuntimeException("Nenhum cliente encontrado para o id informado!"));
+        return new ClientDTO(client);
+    }
+
     public void copyDtoToEntity(ClientDTO clientDTO, Client client) {
         client.setId(clientDTO.getId());
         client.setName(clientDTO.getName());
