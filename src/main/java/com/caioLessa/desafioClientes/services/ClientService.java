@@ -3,6 +3,7 @@ package com.caioLessa.desafioClientes.services;
 import com.caioLessa.desafioClientes.dto.ClientDTO;
 import com.caioLessa.desafioClientes.entities.Client;
 import com.caioLessa.desafioClientes.repositories.ClientRepository;
+import com.caioLessa.desafioClientes.services.exceptions.ResourceNotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -30,7 +31,7 @@ public class ClientService {
     }
 
     public ClientDTO findById(Long id) {
-        Client client = clientRepository.findById(id).orElseThrow(() -> new RuntimeException("Nenhum cliente encontrado para o id informado!"));
+        Client client = clientRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Nenhum cliente encontrado para o id informado!"));
         return new ClientDTO(client);
     }
 
