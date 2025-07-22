@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -46,6 +47,14 @@ public class ClientService {
         copyDtoToEntity(dto, client);
         client = clientRepository.save(client);
         return new ClientDTO(client);
+    }
+
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public void delete(Long id) {
+        if(!clientRepository.existsById(id)){
+            throw new ResourceNotFoundException("Nenhum cliente encontrado para o id informado!");
+        }
+        clientRepository.deleteById(id);
     }
 
     public void copyDtoToEntity(ClientDTO clientDTO, Client client) {
