@@ -4,7 +4,7 @@ public class FieldMessage {
     private String name;
     private String message;
 
-    public FieldMessage(String name, String messag) {
+    public FieldMessage(String name, String message) {
         this.name = name;
         this.message = message;
     }

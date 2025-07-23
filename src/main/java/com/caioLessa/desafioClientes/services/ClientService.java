@@ -21,10 +21,11 @@ public class ClientService {
         this.clientRepository = clientRepository;
     }
 
-    @Transactional(readOnly = false)
+    @Transactional
     public ClientDTO insert(ClientDTO clientDTO) {
         Client client = new Client();
         copyDtoToEntity(clientDTO, client);
+        client.setId(null);
         client = clientRepository.save(client);
         return new ClientDTO(client);
     }
@@ -41,8 +42,11 @@ public class ClientService {
         return new ClientDTO(client);
     }
 
-    @Transactional(readOnly = false)
+    @Transactional
     public ClientDTO update(Long id, ClientDTO dto) {
+        if(!clientRepository.existsById(id)) {
+            throw new ResourceNotFoundException("Nenhum cliente encontrado para o id informado!");
+        }
         Client client = clientRepository.getReferenceById(id);
         copyDtoToEntity(dto, client);
         client = clientRepository.save(client);
